@@ -27,3 +27,9 @@ resource "aws_elasticache_subnet_group" "main" {
 output "redis" {
   value = aws_elasticache_cluster.elasticache
 }
+
+resource "aws_ssm_parameter" "elasticache_endpoint" {
+  name  = "${var.env}.elasticache.endpoint"
+  type  = "String"
+  value = aws_elasticache_cluster.elasticache.cache_nodes[0].address
+}
